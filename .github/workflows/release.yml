@@ -1,0 +1,50 @@
+name: Release addon
+
+on:
+  push:
+    tags:
+      - 'v[0-9]*'
+      - '[0-9]*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Package addon
+        id: package
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+([.-][0-9A-Za-z]+)*)?$ ]]; then
+            echo "Expected a version tag such as v1.2.3 or v1.2.3-rc.1." >&2
+            exit 1
+          fi
+
+          addon=LFGLanguagesForever
+          staging="$(mktemp -d "$RUNNER_TEMP/addon.XXXXXX")"
+          mkdir "$staging/$addon"
+          cp "$addon.lua" README.md "$staging/$addon/"
+          sed "s/^## Version:.*/## Version: $version/" "$addon.toc" > "$staging/$addon/$addon.toc"
+
+          asset="$RUNNER_TEMP/$addon-$version.zip"
+          (cd "$staging" && zip -r "$asset" "$addon")
+          echo "asset=$asset" >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ASSET: ${{ steps.package.outputs.asset }}
+        run: |
+          options=(--verify-tag --generate-notes)
+          if [[ "$GITHUB_REF_NAME" == *-* ]]; then
+            options+=(--prerelease)
+          fi
+          gh release create "$GITHUB_REF_NAME" "$ASSET" --repo "$GITHUB_REPOSITORY" "${options[@]}"
