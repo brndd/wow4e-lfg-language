@@ -1,5 +1,7 @@
 # LFG Languages Forever
 
+**Note: this is entirely vibecoded. However unlike the slop you find on Curseforge, this is less than 200 lines of code and only does one thing.**
+
 Search for groups and players listed in multiple languages in WoW Forever 1.60.1.
 
 1. Extract the `LFGLanguagesForever` folder from the release ZIP into the Forever client's `Interface/AddOns` folder and enable it in the AddOns list. For a source checkout, create that folder and copy the root `.toc` and `.lua` files into it.
