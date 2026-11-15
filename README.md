@@ -8,7 +8,3 @@ Search for groups and players listed in multiple languages in WoW Forever 1.60.1
 4. Once the current Browse search finishes, click **Search Again**, the refresh button beside the activity dropdown. You can also click **Search** in the Languages submenu. The results appear in the Browse list.
 
 Your game's language is always included. **Select all** includes every language the game offers. **Unselect all** returns to your game's language by itself. Blizzard's automatic Browse searches use the game's default languages. Click **Search Again** or the submenu's **Search** to apply your saved selections.
-
-## Releases
-
-Push a version tag such as `v1.2.3` to GitHub. The release workflow publishes an installable ZIP and writes `1.2.3` into its TOC. Tags such as `v1.2.3-rc.1` publish prereleases.
