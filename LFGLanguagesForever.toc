@@ -1,0 +1,10 @@
+## Interface: 16001
+## AllowLoadGameType: camelot
+## Title: LFG Languages Forever
+## Notes: Search for listings in multiple languages from the Group Finder Browse tab.
+## Category: Group Finder
+## Version: 1.2.1
+## X-License: GPLv3
+## SavedVariables: LFGLanguagesForeverDB
+
+LFGLanguagesForever.lua
